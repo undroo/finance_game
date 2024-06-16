@@ -15,23 +15,23 @@ class Investment:
         # convert asset status to sold? 
         pass
 
-    def calculate_tax_on_sell(self):
+    def calculate_capital_gains(self):
         tax_discount = 1
         if self.year - self.year_bought >= 1: 
             # tax is halved
             tax_discount = 0.5
-        tax_due = calculate_individual_tax(self.amount - self.buy_price) * tax_discount
-        return tax_due
+        gains = (self.amount - self.buy_price) * tax_discount
+        return gains
 
     def grow_asset(self, year):
         self.amount = self.amount * (1+self.growth_rate[year-1])
         self.year = year
  
     def sell_asset(self):
-        tax_due = self.calculate_tax_on_sell()
+        capital_gains = self.calculate_capital_gains()
         result = {
             "cash": self.amount,
-            "tax due": tax_due,
+            "capital_gains": capital_gains,
         }
         self.amount = 0
         self.asset_status = "Sold"
